@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="uk"><head><meta charset="utf-8"><title>Олімпіада з Python: 5 задач Антона</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{--bg:#f7f8fb;--card:#fff;--tx:#1c2333;--mu:#5b6478;--ac:#4f46e5;--ok:#16a34a;--bad:#dc2626;--a:#fde68a;--b:#bfdbfe;--bd:#dde1ea;--cb:#0f172a;--ct:#e2e8f0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11141c;--card:#1a1f2b;--tx:#e8ebf3;--mu:#9aa3b8;--ac:#818cf8;--a:#854d0e;--b:#1e40af;--bd:#2c3345}}
+:root[data-theme="dark"]{--bg:#11141c;--card:#1a1f2b;--tx:#e8ebf3;--mu:#9aa3b8;--ac:#818cf8;--a:#854d0e;--b:#1e40af;--bd:#2c3345}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,"Segoe UI",sans-serif}
+main{max-width:860px;margin:auto;padding:16px}
+h1{font-size:26px;margin:8px 0}h2{margin:0 0 8px;font-size:21px}h3{font-size:16px;margin:14px 0 4px;color:var(--ac)}
+section{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin:18px 0}
+.mu{color:var(--mu)}pre{background:var(--cb);color:var(--ct);padding:12px;border-radius:10px;overflow-x:auto;font-size:13px;line-height:1.45}
+.w{border:1px dashed var(--ac);border-radius:10px;padding:12px;margin:10px 0;overflow-x:auto}
+button,select,input{font:inherit;padding:5px 10px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx)}
+button{background:var(--ac);color:#fff;border:0;cursor:pointer;margin:2px}input[type=range]{padding:0;width:200px}
+.pg{display:inline-grid;grid-template-columns:repeat(20,7px);gap:1px;margin:2px 6px 2px 0;padding:2px;border:1px solid var(--bd)}
+.pg i{width:7px;height:7px;background:var(--b)}.pg i.e{background:transparent;outline:1px solid var(--bd)}
+.g{display:inline-grid;grid-template-columns:repeat(3,44px);gap:3px;margin:4px 14px 4px 0}
+.g div{width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;border:1px solid var(--bd);border-radius:6px}
+.g .d{background:var(--a)}.yes{color:var(--ok);font-weight:700}.no{color:var(--bad);font-weight:700}
+table{border-collapse:collapse}td,th{border:1px solid var(--bd);padding:4px 9px;text-align:center}
+.bar{display:flex;height:38px;border-radius:8px;overflow:hidden;margin:8px 0}.bar div{display:flex;align-items:center;justify-content:center;font-size:13px;min-width:0;overflow:hidden}
+.th{background:color-mix(in srgb,var(--ac) 10%,transparent);border-left:4px solid var(--ac);padding:8px 14px;border-radius:8px;margin:10px 0}.th h4{margin:6px 0 2px}.th ul,.th ol{margin:4px 0;padding-left:22px}.task{background:var(--a);padding:8px 12px;border-radius:8px;margin:8px 0}
+</style></head><body><main>
+<h1>🏆 Олімпіадний Python: 5 задач Антона</h1>
+<p class="mu">Для кожної задачі: ідея «на пальцях» → інтерактивна візуалізація → код → задача для самостійної роботи. Спробуй сам(а) перед тим, як читати розв’язок!</p>
+
+<section class="th" style="border-radius:14px"><h2>📘 Як розв’язувати олімпіадну задачу</h2><ol><li><b>Прочитай умову двічі</b> і виділи: що дано, що знайти, які обмеження.</li><li><b>Розбери приклади вручну</b> — це перевірка, що ти зрозумів(ла) умову.</li><li><b>Оціни складність за обмеженнями.</b> Python робить ≈10⁷ простих операцій за секунду: n ≤ 100 → підійде майже все; n ≤ 5000 → O(n²); n ≤ 10⁶ → тільки O(n) або O(n log n).</li><li><b>Спочатку повільний правильний розв’язок</b> (він дає частину балів), потім прискорення.</li><li><b>Крайні випадки:</b> n=1, нулі, однакові числа, максимальні значення.</li></ol></section>
+<section><h2>1. Вакансії</h2>
+<div class="th"><h4>📚 Що потрібно знати: прості типи даних</h4><ul><li><b>int</b> — ціле число (5, −3, 100). <b>str</b> — рядок тексту («abc»). <b>bool</b> — True/False. У Python цілі числа можуть бути дуже великими (10¹⁷ — не проблема).</li><li><code>input()</code> завжди повертає <b>рядок</b>. Щоб працювати як з числом: <code>int(input())</code>.</li><li>Арифметика: <code>+ − *</code>, <code>//</code> — ціле ділення (7 // 2 = 3), <code>%</code> — остача (7 % 2 = 1), <code>**</code> — степінь.</li><li><code>print(a, b)</code> виводить два значення через пропуск.</li></ul><pre>x = int(input())   # введемо 7
+print(x // 2, x % 2)   # 3 1</pre></div>
+<div class="w"><b>✏️ Перевір себе: що виведе код?</b><pre>print(17 // 5, 17 % 5)</pre><details><summary>Відповідь</summary>3 2 (17 = 5·3 + 2)</details><pre>x = "5"
+print(x + x)
+print(int(x) + int(x))</pre><details><summary>Відповідь</summary>55 і 10. Рядки склеюються, числа додаються.</details><pre>k = 45
+print((k + 19) // 20)</pre><details><summary>Відповідь</summary>3. Це кількість сторінок для 45 вакансій (64 // 20).</details></div>
+<p>На кожній сторінці максимум 20 вакансій, сторінок n. Знайти мінімум і максимум вакансій.</p>
+<div class="th"><h4>📘 Теорія: ділення з округленням і діапазон</h4><ul><li>Для k вакансій потрібно ⌈k/20⌉ сторінок. У Python: <code>(k + 19) // 20</code>. Саме <code>//</code> — цілочисельне ділення.</li><li>Обернена думка: рівно n сторінок буває тоді, коли <b>20·(n−1) &lt; k ≤ 20·n</b>. Ліва межа строга: якщо k = 20·(n−1), то нова сторінка ще не створювалась.</li><li>Задачі «мінімум і максимум» розв’язуй через <b>крайні сценарії</b>: що найгірше/найкраще може статись?</li></ul></div>
+<h3>Ідея</h3><p><b>Максимум:</b> усі сторінки повні → 20·n. <b>Мінімум:</b> усі сторінки, крім останньої, повні (нова сторінка створюється лише коли попередня заповнена!), а на останній — хоча б 1 вакансія → 20·(n−1)+1.</p>
+<div class="w">n = <input type="range" id="p1n" min="1" max="8" value="3"> <b id="p1v"></b>
+<div><span class="mu">мінімум:</span><div id="p1min"></div></div><div><span class="mu">максимум:</span><div id="p1max"></div></div><p id="p1t"></p></div>
+<pre>n = int(input())
+print(20 * (n - 1) + 1, 20 * n)</pre>
+<div class="th"><h4>🔍 Розбір розв’язку</h4><ol><li><code>int(input())</code> — зчитуємо рядок і перетворюємо в число.</li><li>Мінімум: n−1 сторінок повні (20 штук) + 1 вакансія, яка й змусила створити останню сторінку.</li><li>Максимум: усі n сторінок повні.</li><li>Перевірка: n=1 → «1 20»; n=2 → «21 40». Складність O(1).</li></ol></div>
+<details class="th"><summary><b>🧩 Схожа задача: спочатку простіше, потім складніше</b></summary>
+<h4>Рівень 1 (розминка)</h4><p>На полиці вміщається 3 книжки, полиць 2. Нова полиця починається лише тоді, коли попередня повна. Скільки книжок мінімум і максимум?</p>
+<p><b>Розв’язок:</b> максимум — обидві полиці повні: 3·2 = 6 [ККК][ККК]. Мінімум — перша повна, на другій одна книжка: 3·1+1 = 4 [ККК][К]. Це та сама ідея: n−1 повних + 1.</p>
+<h4>Рівень 2 (схоже на задачу)</h4><p>У поїзді n вагонів по 54 місця. Пасажири заходять у наступний вагон лише коли попередній повний. Скільки пасажирів мінімум і максимум? А якщо відомо, що пасажирів k, скільки вагонів потрібно?</p>
+<pre>n = int(input())
+print(54 * (n - 1) + 1, 54 * n)
+
+k = int(input())            # зворотна задача
+print((k + 53) // 54)       # округлення вгору</pre>
+<p><b>Пояснення:</b> розмір вмістилища (54) просто замінює число 20. Для зворотної задачі ділимо з округленням вгору: <code>(k + розмір − 1) // розмір</code>.</p></details>
+<div class="task">✍️ Схожа: у вагоні 54 місця, вагонів n. Скільки пасажирів мінімум, якщо перший вагон починають заповнювати лише коли попередні повні?</div></section>
+
+<section><h2>2. Магазини</h2>
+<div class="th"><h4>📚 Що потрібно знати: список із рядка та розпакування</h4><ul><li><b>Список (list)</b> — впорядкований набір значень: <code>[7, 5, 3]</code>.</li><li><code>input().split()</code> розрізає рядок «7 5 3» на список слів <code>['7','5','3']</code> (за пропусками).</li><li><code>map(int, ...)</code> застосовує <code>int</code> до кожного елемента, тобто перетворює слова на числа.</li><li><b>Розпакування:</b> <code>a, b, c = [7, 5, 3]</code> розкладає значення по змінних.</li></ul><pre>a, b, c = map(int, input().split())   # введемо: 7 5 3
+print(a, b, c)                         # 7 5 3</pre></div>
+<div class="w"><b>✏️ Перевір себе: що виведе код?</b><pre>a, b = map(int, "4 9".split())
+print(a + b)</pre><details><summary>Відповідь</summary>13</details><pre>s = "7 5 3".split()
+print(s)</pre><details><summary>Відповідь</summary>['7', '5', '3'] — список рядків, а не чисел.</details><pre>x = [10, 20, 30]
+p, q, r = x
+print(r, p)</pre><details><summary>Відповідь</summary>30 10</details></div>
+<p>На шляху 1 є a магазинів, на шляху 2 — b, на обох — c. Скільки магазинів усього?</p>
+<div class="th"><h4>📘 Теорія: множини та формула включень-виключень</h4><ul><li>Шлях 1 і шлях 2 — це дві <b>множини</b> магазинів. Нам потрібен розмір їхнього <b>об’єднання</b> |A ∪ B|.</li><li>Спільні елементи (перетин |A ∩ B| = c) входять у обидві множини.</li><li><b>|A ∪ B| = |A| + |B| − |A ∩ B|.</b> Для трьох множин формула довша: додаємо поодинці, віднімаємо парні перетини, додаємо потрійний.</li><li>Корисне: так само рахують «скільки учнів люблять А або Б».</li></ul></div>
+<h3>Ідея (формула включень-виключень)</h3><p>Якщо додати a+b, то спільні c магазинів порахуємо двічі. Віднімаємо один раз: <b>a + b − c</b>.</p>
+<div class="w">a <input id="p2a" type="number" value="7" min="0" max="100" style="width:60px"> b <input id="p2b" type="number" value="5" min="0" max="100" style="width:60px"> c <input id="p2c" type="number" value="3" min="0" max="100" style="width:60px">
+<div class="bar" id="p2bar"></div><p id="p2t"></p></div>
+<pre>a, b, c = map(int, input().split())
+print(a + b - c)</pre>
+<div class="th"><h4>🔍 Розбір розв’язку</h4><ol><li><code>input().split()</code> розбиває рядок «7 5 3» на список слів, <code>map(int, …)</code> робить їх числами, а розпаковування <code>a, b, c = …</code> роздає по змінних.</li><li>Приклад: a=7, b=5, c=3. Тільки перший: 7−3=4, спільні: 3, тільки другий: 5−3=2. Разом 4+3+2=9 = 7+5−3.</li><li>Обмеження c ≤ a, b гарантує, що результат не від’ємний. Складність O(1).</li></ol></div>
+<details class="th"><summary><b>🧩 Схожа задача: спочатку простіше, потім складніше</b></summary>
+<h4>Рівень 1 (розминка)</h4><p>На футбол ходять 10 учнів, на шахи 6, спільних немає. Скільки учнів ходять хоча б на один гурток? А якщо двоє ходять на обидва?</p>
+<p><b>Розв’язок:</b> без спільних: 10+6 = 16. Якщо двоє на обидва, у 16 вони пораховані двічі, тому 10+6−2 = <b>14</b>.</p>
+<h4>Рівень 2 (схоже на задачу)</h4><p>У класі n учнів. На футбол ходять a, на шахи b, на обидва c. Скільки учнів <b>не ходять ні на що</b>?</p>
+<pre>n, a, b, c = map(int, input().split())
+print(n - (a + b - c))</pre>
+<p><b>Пояснення:</b> спочатку знаходимо тих, хто ходить хоча б куди-небудь (a+b−c), потім віднімаємо від усього класу. Приклад: n=20, a=10, b=6, c=2 → 20−14 = 6.</p></details>
+<div class="task">✍️ У класі a учнів ходять на футбол, b — на шахи, c — і туди, і туди. Скільки учнів ходять хоча б на один гурток?</div></section>
+
+<section><h2>3. Хрестики-нулики</h2>
+<div class="th"><h4>📚 Що потрібно знати: рядки, двовимірні масиви, умови, цикли</h4><ul><li><b>Рядок (str)</b> — це послідовність символів. Нумерація з нуля: <code>s = ".X0"</code> → <code>s[0]=='.'</code>, <code>s[1]=='X'</code>. <code>len(s)</code> — довжина, <code>s.count('X')</code> — скільки разів зустрівся символ.</li><li><b>Двовимірний масив</b> — таблиця (список списків або список рядків). Поле 3×3: <code>A = [".X.", ".X.", "00."]</code>. Клітинка в рядку i, стовпці j: <code>A[i][j]</code>. Наприклад A[2][0] — це «0».</li><li><b>Згортання таблиці в рядок:</b> <code>''.join(A)</code> склеює рядки в один: «.X..X.00.». Клітинка (i, j) стає позицією <code>i*3 + j</code>. Так порівнювати легше: один цикл замість двох.</li><li><b>Цикл for:</b> <code>for i in range(9)</code> проходить i = 0…8.</li><li><b>Генератор списку:</b> <code>[i for i in range(9) if A[i] != B[i]]</code> збирає індекси, для яких умова істинна.</li><li><b>Умови:</b> <code>if / elif / else</code>; порівняння <code>==  !=  &lt;  &gt;</code>; логіка <code>and</code>, <code>or</code>.</li><li><b>Умовний вираз:</b> <code>'X' if k == 0 else '0'</code>.</li></ul><pre>A = [".X.", ".X.", "00."]       # 2D: список із 3 рядків
+print(A[2][0])                  # 0
+s = ''.join(A)                  # '.X..X.00.'
+print(s.count('0'))             # 2
+
+# як створити порожню таблицю 3×3 з нулів
+T = [[0] * 3 for _ in range(3)]   # правильно!
+# T = [[0] * 3] * 3  — помилка: усі рядки це один і той самий список</pre></div>
+<div class="w"><b>✏️ Перевір себе: що виведе код?</b><pre>s = "X0.X"
+print(s[1], s.count('X'), len(s))</pre><details><summary>Відповідь</summary>0 2 4</details><pre>A = ["X0.", "..X", "0.."]
+print(A[1][2], A[2][0])</pre><details><summary>Відповідь</summary>X 0 (рядок 1, стовпець 2 — «X»; рядок 2, стовпець 0 — «0»)</details><pre>print([i for i in range(4) if "X0.X"[i] != "X00X"[i]])</pre><details><summary>Відповідь</summary>[2] — різниця лише в позиції 2.</details></div>
+<p>Чи можна з поля A отримати поле B не більше ніж за один правильний хід?</p>
+<div class="th"><h4>📘 Теорія: моделювання та рядки</h4><ul><li>Це задача на <b>моделювання</b>: потрібно акуратно перевірити всі умови правил, без хитрих алгоритмів.</li><li>Правила: X ходить першим, ходи чергуються. Отже, у <b>допустимому</b> полі або X = 0 (наступний ходить X), або X = 0 + 1 (наступний ходить 0).</li><li>Один хід змінює <b>рівно одну</b> порожню клітинку на символ того, чия черга.</li><li>Прийом Python: перетворюємо поле 3×3 у рядок з 9 символів (<code>''.join</code>). Тоді порівнюємо клітинки за індексом, а <code>s.count('X')</code> рахує символи.</li></ul></div>
+<h3>Ідея — три питання</h3>
+<ol><li>Скільки клітинок відрізняється? <b>0</b> → YES. <b>Більше 1</b> → NO.</li>
+<li>Якщо рівно одна: чи була вона порожньою «.»? Ні → NO (поле змінено).</li>
+<li>Чия черга? Якщо хрестиків <b>стільки ж</b>, скільки нуликів — ходить X, інакше — 0. Поставлений символ має збігатися.</li></ol>
+<div class="w">Приклад: <select id="p3s"></select> <span class="mu">(клікай по клітинках B, щоб міняти їх!)</span><br>
+<b>A</b><br><div class="g" id="p3a"></div><br><b>B</b><br><div class="g" id="p3b"></div><p id="p3t"></p></div>
+<pre>A = ''.join(input() for _ in range(3))
+B = ''.join(input() for _ in range(3))
+diff = [i for i in range(9) if A[i] != B[i]]
+if len(diff) == 0:
+    print("YES")
+elif len(diff) > 1:
+    print("NO")
+else:
+    i = diff[0]
+    turn = 'X' if A.count('X') == A.count('0') else '0'
+    print("YES" if A[i] == '.' and B[i] == turn else "NO")</pre>
+<div class="th"><h4>🔍 Розбір розв’язку і приклади</h4><ol><li><code>diff</code> — список індексів клітинок, що відрізняються. Його довжина відразу відсікає 0 (YES) і &gt;1 (NO).</li><li><code>turn</code> — чия черга за полем A.</li><li><b>Приклад 1:</b> у A два X і два 0 → ходить X, а в B з’явився 0 → NO.</li><li><b>Приклад 3:</b> у A три X і три 0 → ходить X, додано X → YES (гра не зупиняється при трьох у ряд).</li><li><b>Приклад 4:</b> відрізняються всі 9 клітинок → NO.</li><li><b>Приклад 5:</b> різниці немає → YES.</li></ol><p class="mu">Типова помилка: забути перевірити, що клітинка була порожньою («.»), і дозволити замінити X на 0.</p></div>
+<details class="th"><summary><b>🧩 Схожа задача: спочатку простіше, потім складніше</b></summary>
+<h4>Рівень 1 (розминка)</h4><p>Є два рядки однакової довжини. Скільки позицій, де символи відрізняються?</p>
+<pre>A = input()
+B = input()
+print(sum(x != y for x, y in zip(A, B)))</pre>
+<p><b>Пояснення:</b> <code>zip</code> бере символи парами, <code>x != y</code> дає True/False, а <code>sum</code> рахує True як 1. Для «.X0..» і «.X0X.» відповідь 1.</p>
+<h4>Рівень 2 (схоже на задачу)</h4><p>Поле — смужка 1×5 (один рядок). Чи можна з A отримати B не більше ніж за один хід? X ходить першим.</p>
+<pre>A = input()
+B = input()
+diff = [i for i in range(5) if A[i] != B[i]]
+if len(diff) == 0:
+    print("YES")
+elif len(diff) > 1:
+    print("NO")
+else:
+    i = diff[0]
+    turn = 'X' if A.count('X') == A.count('0') else '0'
+    print("YES" if A[i] == '.' and B[i] == turn else "NO")</pre>
+<p><b>Приклад:</b> A=«.X0..», B=«.X0X.». Різниця в одній клітинці (індекс 3), там було «.». У A один X і один 0, тож ходить X, і поставлено X → <b>YES</b>. Якби в B стояв 0, було б NO.</p></details>
+<div class="task">✍️ Дано дві дошки для гри в «хрестики-нулики» 4×4. Адаптуй код: що зміниться? (Підказка: нічого, окрім розміру!)</div></section>
+
+<section><h2>4. Послідовність</h2>
+<div class="th"><h4>📚 Що потрібно знати: одновимірні масиви, множини, функції, сортування</h4><ul><li><b>Одновимірний масив</b> — це список: <code>a = [1, 3, 4, 2, 5]</code>. Індекси від 0: <code>a[0]=1</code>, <code>a[-1]=5</code> (останній). <code>len(a)</code> — довжина, <code>a.append(7)</code> — додати в кінець, <code>max(a)</code> — найбільше.</li><li><b>Створення масиву заданого розміру:</b> <code>dp = [1] * n</code> — n одиниць. <code>[0] * (2*m)</code> — 2m нулів.</li><li><b>Зчитування масиву:</b> <code>a = list(map(int, input().split()))</code>.</li><li><b>Вкладені цикли:</b> цикл у циклі. <code>for i in range(n): for j in range(i):</code> перебирає всі пари j &lt; i. Це O(n²): для n = 5·10⁵ занадто повільно.</li><li><b>Множина (set)</b> — набір <b>унікальних</b> значень без порядку. <code>set([3,1,3,2])</code> → {1, 2, 3}. Перевірка <code>x in s</code> працює дуже швидко.</li><li><b>Сортування:</b> <code>sorted(s)</code> повертає відсортований список. Так ми отримуємо відсортований список унікальних значень <code>vals = sorted(set(a))</code>.</li><li><b>Двійковий пошук</b> — як шукати слово в словнику: дивимось у середину й відкидаємо половину. Це O(log n). У Python його роблять <code>bisect_left(v, x)</code> (позиція першого елемента ≥ x) і <code>bisect_right(v, x)</code> (позиція першого елемента &gt; x) — працюють лише для <b>відсортованого</b> списку.</li><li><b>Функція:</b> <code>def f(x): return x + 1</code>. Дозволяє використовувати один код багато разів (наприклад, <code>query</code>).</li><li><b>Швидке читання:</b> для великих даних <code>sys.stdin.buffer.read().split()</code> читає все одразу і працює швидше за багато <code>input()</code>.</li><li><b>Бітові операції:</b> <code>x &amp; 1</code> — остання цифра двійкового запису (парність), <code>x &gt;&gt; 1</code> — ділення на 2 нацело.</li></ul><pre>from bisect import bisect_left, bisect_right
+vals = sorted(set([5, 1, 3, 3, 1]))   # [1, 3, 5]
+print(bisect_left(vals, 3))            # 1
+print(bisect_right(vals, 3))           # 2
+print(bisect_right(vals, 4) - bisect_left(vals, 2))   # скільки значень у [2, 4]: 1</pre></div>
+<div class="w"><b>✏️ Перевір себе: що виведе код?</b><pre>a = [4, 1, 3]
+a.append(2)
+print(len(a), max(a), a[-1])</pre><details><summary>Відповідь</summary>4 4 2</details><pre>print(sorted(set([5, 1, 5, 3])))</pre><details><summary>Відповідь</summary>[1, 3, 5] — унікальні значення за зростанням.</details><pre>from bisect import bisect_left, bisect_right
+v = [1, 3, 5, 7]
+print(bisect_left(v, 4), bisect_right(v, 5),
+      bisect_right(v, 6) - bisect_left(v, 3))</pre><details><summary>Відповідь</summary>2 3 2. У [3, 6] потрапляють 3 і 5.</details></div>
+<p>Знайти найдовшу підпослідовність, де суми сусідів лежать у [l, r].</p>
+<div class="th"><h4>📘 Теорія</h4><ul><li><b>Підпослідовність</b> зберігає порядок, але може пропускати елементи (на відміну від підрядка, де елементи йдуть підряд).</li><li><b>Динамічне програмування (ДП):</b> задачу розбивають на підзадачі. Треба визначити (1) <i>стан</i> — що таке dp[i], (2) <i>перехід</i> — як dp[i] виражається через менші, (3) <i>відповідь</i>. Тут стан — «найдовша підпослідовність, що закінчується в i».</li><li><b>Складність:</b> n=5·10⁵ → O(n²) це 2,5·10¹¹ дій, неможливо. Треба O(n log n).</li><li><b>Стиснення координат:</b> значення до 10¹⁷ замінюємо їхніми номерами у відсортованому списку унікальних чисел.</li><li><b>bisect:</b> <code>bisect_left(v, x)</code> — індекс першого елемента ≥ x, <code>bisect_right(v, x)</code> — першого елемента &gt; x. Разом вони дають напіввідкритий діапазон [lo, hi) усіх значень з відрізка [L, R].</li><li><b>Дерево відрізків</b> — масив <code>t</code>, де листки лежать у t[m…2m−1], а кожен вузол t[i] зберігає максимум двох дітей t[2i] і t[2i+1]. Оновлення точки: ставимо листок і піднімаємось угору, перераховуючи батьків. Запит [lo, hi): беремо «зайві» вузли на межах і піднімаємось. Обидві дії — O(log n).</li></ul></div>
+<h3>Крок 1: повільно (динамічне програмування, n ≤ 5000)</h3>
+<p><code>dp[i]</code> — найдовша підпослідовність, що <b>закінчується</b> на a[i]. Попереднім може бути будь-який a[j], j &lt; i, для якого <b>l ≤ a[j]+a[i] ≤ r</b>, тобто a[j] ∈ [l−a[i], r−a[i]]. Тоді dp[i] = 1 + max dp[j]. Відповідь — max dp.</p>
+<div class="w">l <input id="p4l" type="number" value="2" style="width:60px"> r <input id="p4r" type="number" value="6" style="width:60px"> a: <input id="p4a" value="1 3 4 2 5" style="width:170px">
+<button id="p4n">Крок ▶</button><button id="p4r0" style="background:var(--mu)">Спочатку</button>
+<div id="p4o"></div></div>
+<h3>Крок 2: швидко (n ≤ 5·10⁵)</h3>
+<p>Цикл по j повільний — O(n²). Нам треба «максимум dp серед значень a[j] із діапазону [l−x, r−x]». Це <b>запит максимуму на відрізку з оновленням точки</b> — його швидко робить <b>дерево відрізків</b> (O(log n)). Значення до 10¹⁷ → стискаємо координати: індекси у відсортованому списку унікальних значень, межі шукаємо через <code>bisect</code>.</p>
+<pre>import sys
+from bisect import bisect_left, bisect_right
+def main():
+    d = sys.stdin.buffer.read().split()
+    n, l, r = int(d[0]), int(d[1]), int(d[2])
+    a = list(map(int, d[3:3 + n]))
+    vals = sorted(set(a)); m = len(vals)
+    t = [0] * (2 * m)              # дерево максимумів
+    def query(lo, hi):             # максимум на [lo, hi)
+        res = 0; lo += m; hi += m
+        while lo < hi:
+            if lo & 1: res = max(res, t[lo]); lo += 1
+            if hi & 1: hi -= 1; res = max(res, t[hi])
+            lo >>= 1; hi >>= 1
+        return res
+    best = 0
+    for x in a:
+        lo = bisect_left(vals, l - x)
+        hi = bisect_right(vals, r - x)
+        cur = query(lo, hi) + 1    # dp[i]
+        p = bisect_left(vals, x) + m
+        if cur > t[p]:
+            t[p] = cur
+            while p > 1:
+                p >>= 1
+                t[p] = max(t[2 * p], t[2 * p + 1])
+        best = max(best, cur)
+    print(best)
+main()</pre>
+<div class="th"><h4>🔍 Розбір розв’язку</h4><p><b>Приклад 1</b> (l=2, r=6, a = 1 3 4 2 5):</p><ul><li>a₁=1 → попередніх нема, dp=1.</li><li>a₂=3 → шукаємо значення з [−1, 3]: підходить 1 (dp=1) → dp=2.</li><li>a₃=4 → [−2, 2]: підходить 1 → dp=2.</li><li>a₄=2 → [0, 4]: підходять 1, 3, 4 (dp = 1, 2, 2) → dp=3.</li><li>a₅=5 → [−3, 1]: підходить 1 → dp=2.</li><li>Відповідь max = <b>3</b> (наприклад, 1, 3, 2).</li></ul><p><b>Що робить код на кожному елементі x:</b> (1) через <code>bisect</code> знаходить діапазон [lo, hi) індексів значень від l−x до r−x; (2) <code>query</code> дає найкращий dp серед них (0, якщо їх немає), тому <code>cur = query + 1</code>; (3) записує cur у листок для значення x і оновлює предків; (4) оновлює відповідь.</p><p><b>Чому достатньо зберігати максимум по значенню:</b> якщо однакове число зустрілось кілька разів, нас цікавить лише найкращий dp серед них, бо їхні сусіди-кандидати збігаються. <b>Приклад 2</b> (l=r=1, 1 1): сума 1+1=2 ∉ [1,1] → відповідь 1. Складність O(n log n).</p><p class="mu">Підзадачі за балами: «всі aᵢ однакові» → або 1, або n; n ≤ 5000 → повільне ДП; l=1 → можна спростити; повний бал → дерево відрізків.</p></div>
+<details class="th"><summary><b>🧩 Схожа задача: спочатку простіше, потім складніше</b></summary>
+<h4>Рівень 1 (розминка)</h4><p>Скільки пар <b>сусідніх</b> чисел у масиві мають суму в [l, r]?</p>
+<pre>n, l, r = map(int, input().split())
+a = list(map(int, input().split()))
+print(sum(l <= a[i] + a[i + 1] <= r for i in range(n - 1)))</pre>
+<p><b>Пояснення:</b> тут жодного ДП, лише один цикл. Для 5 2 6 / 1 3 4 2 5 суми 4, 7, 6, 7, тож підходять дві пари.</p>
+<h4>Рівень 2 (схоже на задачу)</h4><p>Знайти найдовшу <b>зростаючу</b> підпослідовність (кожен наступний більший за попередній). Масив: 3 1 4 2 5.</p>
+<pre>n = int(input())
+a = list(map(int, input().split()))
+dp = [1] * n
+for i in range(n):
+    for j in range(i):
+        if a[j] < a[i]:
+            dp[i] = max(dp[i], dp[j] + 1)
+print(max(dp))</pre>
+<p><b>Розв’язок на прикладі:</b> dp = 1, 1, 2, 2, 3. Числа 3 і 1 не мають менших попередників (dp=1). Для 4 підходять 3 і 1 (dp=2). Для 2 підходить 1 (dp=2). Для 5 підходять 3, 1, 4, 2, найкращий dp=2, тому dp=3. Відповідь <b>3</b> (наприклад 1, 2, 5).</p>
+<p class="mu">Схема та сама, що в задачі: dp[i] = 1 + максимум dp[j] за умовою на a[j]. Різниця лише в умові: тут «a[j] &lt; a[i]» замість «a[j] у [l−x, r−x]». Прискорюється теж деревом (або деревом Фенвіка).</p></details>
+<div class="task">✍️ Змініть умову: суми сусідів мають бути <b>рівно</b> k. Який словник замінить дерево відрізків?</div></section>
+
+<section><h2>5. Матчі</h2>
+<div class="th"><h4>📚 Що потрібно знати: множини, графи, черга, масиви-«вказівники»</h4><ul><li><b>Множина (set):</b> <code>s = set()</code> — порожня. <code>s.add(x)</code> — додати, <code>x in s</code> — чи є (швидко), <code>s = set()</code> знову — очистити.</li><li><b>Кортеж (tuple)</b> — пара або трійка значень, що не змінюється: <code>e = (2, 3)</code>. Зручно для ребер: <code>u, v = e</code>.</li><li><b>Граф</b> — це вершини (точки) і ребра (лінії між ними). У задачі вершини — друзі, ребра — конфлікти. Дві вершини <b>сусідні</b>, якщо між ними є ребро.</li><li><b>Як зберігати граф — список суміжності:</b> для кожної вершини список її сусідів. Нумерація вершин з 1, тому розмір n+1:</li></ul><pre>n = 4
+g = [[] for _ in range(n + 1)]   # g[v] — список сусідів v
+for u, v in [(1, 2), (2, 3), (3, 1)]:
+    g[u].append(v)
+    g[v].append(u)               # ребро в обидва боки
+print(g[1])                      # [2, 3]</pre><ul><li><b>Черга (deque)</b> — «хто перший прийшов, той перший пішов». <code>q = deque([s])</code>, <code>q.append(y)</code> додає в кінець, <code>q.popleft()</code> забирає з початку.</li><li><b>BFS (пошук у ширину)</b> — обхід графа хвилями: спочатку вершина, потім її сусіди, потім сусіди сусідів. Через нього розфарбовуємо граф у 2 кольори.</li><li><b>Дводольний граф</b> — граф, вершини якого можна розфарбувати у 2 кольори (дві команди) так, що кінці кожного ребра різного кольору. Не дводольний тоді, коли є цикл непарної довжини (наприклад, трикутник).</li><li><b>DSU (система непересічних множин)</b> — два масиви <code>parent</code> і <code>par</code>. <code>parent[v]</code> — «хто головніший за v у групі». Перехід по <code>parent</code>, поки не дійдемо до кореня, і є <code>find</code>. Масив <code>par[v]</code> зберігає парність: 0 — той самий колір, що й корінь, 1 — інший. <code>^</code> — XOR: 0^1=1, 1^1=0.</li><li><b>Скидання масивів:</b> щоб не перебирати n елементів, запам’ятовуємо лише ті вершини, яких торкалися (<code>touched</code>), і скидаємо тільки їх.</li></ul></div>
+<div class="w"><b>✏️ Перевір себе: що виведе код?</b><pre>s = set()
+s.add(3); s.add(3); s.add(5)
+print(len(s), 5 in s, 4 in s)</pre><details><summary>Відповідь</summary>2 True False — множина не зберігає повторів.</details><pre>g = [[] for _ in range(4)]
+for u, v in [(1, 2), (1, 3)]:
+    g[u].append(v)
+    g[v].append(u)
+print(g)</pre><details><summary>Відповідь</summary>[[], [2, 3], [1], [1]]</details><pre>from collections import deque
+q = deque([1])
+q.append(2); q.append(3)
+print(q.popleft(), q.popleft())</pre><details><summary>Відповідь</summary>1 2 — черга: перший прийшов, перший пішов.</details><pre>print(0 ^ 1, 1 ^ 1, 1 ^ 0 ^ 1)</pre><details><summary>Відповідь</summary>1 0 0 — XOR дає 1 лише для різних бітів.</details></div>
+<p>Розбити послідовність пар-конфліктів на мінімум відрізків, у кожному з яких граф можна розфарбувати у 2 кольори (дві команди).</p>
+<div class="th"><h4>📘 Теорія</h4><ul><li><b>Граф</b> — вершини (друзі) і ребра (конфлікти). <b>Дводольний граф</b> — такий, вершини якого можна розфарбувати у 2 кольори так, що кінці кожного ребра мають різні кольори. Це й є «дві команди без конфліктів усередині».</li><li><b>Теорема:</b> граф дводольний ⇔ у ньому <b>немає циклу непарної довжини</b> (трикутник — найменший такий цикл).</li><li><b>DSU</b> (система неперетинних множин): <code>find(x)</code> повертає «головного» компоненти, <code>union</code> об’єднує компоненти. Зберігаючи для кожної вершини <b>парність</b> шляху до кореня (0 — та сама команда, що й корінь, 1 — інша), ми дізнаємось, чи однакового кольору дві вершини.</li><li><b>Жадібний алгоритм:</b> завжди робимо відрізок якомога довшим. Це оптимально, бо якщо підвідрізок дводольний, то будь-який його менший шматок теж, тож подовжувати відрізок ніколи не гірше, ніж обривати.</li></ul></div>
+<h3>Ідея</h3>
+<ol><li>Дві команди ⇔ граф <b>дводольний</b> ⇔ немає циклу непарної довжини.</li>
+<li><b>Жадібність:</b> додаємо ребра по черзі в поточний відрізок, доки він дводольний. Щойно ребро ламає дводольність — починаємо новий відрізок з цього ребра.</li>
+<li>Як швидко перевіряти? <b>DSU з парністю</b>: для кожної вершини зберігаємо, чи вона в тій самій команді, що й корінь. Ребро (u,v) ламає граф, якщо u і v в одній компоненті й мають <b>однакову</b> парність.</li>
+<li>Новий відрізок: скидаємо лише вершини, яких торкались (а не всі n).</li></ol>
+<div class="w">Приклад: <select id="p5s"><option>n=3: 1-2, 2-3, 1-3</option><option>n=5, 10 пар</option></select>
+<button id="p5n">Додати ребро ▶</button><button id="p5r" style="background:var(--mu)">Спочатку</button>
+<div id="p5o"></div></div>
+<pre>import sys
+def main():
+    d = sys.stdin.buffer.read().split()
+    n, m = int(d[0]), int(d[1])
+    parent = list(range(n + 1)); par = [0] * (n + 1)  # par — парність до кореня
+    def find(x):
+        path = []
+        while parent[x] != x:
+            path.append(x); x = parent[x]
+        acc = 0
+        for v in reversed(path):
+            acc ^= par[v]; par[v] = acc; parent[v] = x
+        return x
+    ans, touched = 1, []
+    for i in range(m):
+        u, v = int(d[2 + 2 * i]), int(d[3 + 2 * i])
+        for _ in range(2):         # пробуємо додати; після скидання — другий раз
+            ru, rv = find(u), find(v)
+            if ru == rv and par[u] == par[v]:   # непарний цикл
+                ans += 1
+                for x in touched:
+                    parent[x] = x; par[x] = 0
+                touched = []
+                continue            # додаємо це ребро у новий відрізок
+            if ru != rv:
+                parent[ru] = rv; par[ru] = par[u] ^ par[v] ^ 1
+            touched += (u, v)
+            break
+    print(ans)
+main()</pre>
+<div class="th"><h4>🔍 Розбір розв’язку</h4><ol><li><b>Приклад 1:</b> ребра 1-2 і 2-3 → команди {1,3} та {2}. Ребро 1-3 замикає трикутник (непарний цикл) → новий відрізок. Відповідь <b>2</b>.</li><li><code>par[v]</code> після <code>find</code> — парність v відносно кореня. Це не лише швидкість, а й сама «розфарбовка».</li><li><b>Конфлікт:</b> <code>ru == rv and par[u] == par[v]</code> — u і v вже в одній компоненті й мають однаковий колір, а ребро вимагає різних.</li><li><b>Об’єднання:</b> ставимо <code>parent[ru] = rv</code> і підбираємо <code>par[ru] = par[u] ^ par[v] ^ 1</code>, щоб u і v вийшли різної парності (<code>^</code> — додавання за модулем 2).</li><li>При конфлікті: <code>ans += 1</code>, скидаємо тільки <code>touched</code> (щоб не витрачати O(n) на кожен відрізок) і <code>continue</code> повторює додавання цього ж ребра вже в порожньому відрізку.</li><li>Складність майже O(m) (з точністю до коефіцієнта DSU). Для n, m = 10⁶ важливо читати вхід одразу через <code>sys.stdin.buffer</code>.</li></ol><p class="mu">Типова помилка: скидати весь масив parent на кожному відрізку — це O(n·відрізки) і призводить до ліміту часу.</p></div>
+<details class="th"><summary><b>🧩 Схожа задача: спочатку простіше, потім складніше</b></summary>
+<h4>Рівень 1 (розминка): та сама жадібність</h4><p>Розбити масив на мінімум відрізків так, щоб у кожному всі числа були <b>різні</b>. Масив: 1 2 1 3 3 2.</p>
+<pre>n = int(input())
+a = list(map(int, input().split()))
+seen = set()
+ans = 1
+for x in a:
+    if x in seen:       # конфлікт: починаємо новий відрізок
+        ans += 1
+        seen = set()
+    seen.add(x)
+print(ans)</pre>
+<p><b>Розв’язок:</b> [1 2] — далі знову 1, конфлікт → новий відрізок [1 3] — далі знову 3, конфлікт → [3 2]. Відповідь <b>3</b>. Ідея така: розширюємо відрізок, поки можна, при конфлікті починаємо новий з поточного елемента.</p>
+<h4>Рівень 2: перевірка на дві команди</h4><p>Дано граф. Чи можна розфарбувати його у 2 кольори? (Трикутник 1-2-3 → ні, чотирикутник 1-2-3-4-1 → так.)</p>
+<pre>from collections import deque
+n, m = map(int, input().split())
+g = [[] for _ in range(n + 1)]
+for _ in range(m):
+    u, v = map(int, input().split())
+    g[u].append(v); g[v].append(u)
+color = [-1] * (n + 1)
+ok = True
+for s in range(1, n + 1):
+    if color[s] != -1: continue
+    color[s] = 0; q = deque([s])
+    while q:
+        x = q.popleft()
+        for y in g[x]:
+            if color[y] == -1:
+                color[y] = 1 - color[x]; q.append(y)
+            elif color[y] == color[x]:
+                ok = False
+print("YES" if ok else "NO")</pre>
+<p><b>Пояснення:</b> фарбуємо першу вершину у 0, її сусідів у 1, їхніх сусідів знову у 0 і так далі. Якщо сусід уже має той самий колір — конфлікт.</p>
+<p class="mu">Задача «Матчі» поєднує обидва рівні: жадібно ріжемо на відрізки (рівень 1), а замість <code>set</code> перевіряємо дводольність швидко через DSU з парністю (замість повторного BFS).</p></details>
+<div class="task">✍️ Запишіть, чому не можна просто «перебирати всі розбиття», і чому жадібність дає мінімум (підказка: якщо відрізок можна подовжити — навіщо його обривати?).</div></section>
+
+<section><h2>🎯 Шпаргалка</h2>
+<table><tr><th>Задача</th><th>Прийом</th></tr>
+<tr><td>Вакансії</td><td>ділення з округленням, крайні випадки</td></tr>
+<tr><td>Магазини</td><td>включення-виключення</td></tr>
+<tr><td>Хрестики-нулики</td><td>порівняння станів, перебір умов</td></tr>
+<tr><td>Послідовність</td><td>ДП + дерево відрізків + bisect</td></tr>
+<tr><td>Матчі</td><td>жадібність + DSU з парністю</td></tr></table>
+<p class="mu">Порада: перед кодом завжди розпиши малий приклад вручну та перевір крайні випадки (n=1, c=0, порожнє поле).</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+// 1
+function p1(){const n=+$('p1n').value;$('p1v').textContent=n;
+const mk=(full,last)=>{let h='';for(let p=0;p<n;p++){const f=p<n-1?20:last;h+='<span class="pg">'+Array.from({length:20},(_,i)=>'<i class="'+(i<f?'':'e')+'"></i>').join('')+'</span>'}return h};
+$('p1min').innerHTML=mk(0,1);$('p1max').innerHTML=mk(0,20);
+$('p1t').innerHTML='Мінімум = 20·'+(n-1)+'+1 = <b>'+(20*(n-1)+1)+'</b>, максимум = 20·'+n+' = <b>'+20*n+'</b>'}
+$('p1n').oninput=p1;p1();
+// 2
+function p2(){let a=+$('p2a').value,b=+$('p2b').value,c=+$('p2c').value;
+if(c>a||c>b){$('p2bar').innerHTML='';$('p2t').innerHTML='<span class="no">Має бути c ≤ a і c ≤ b</span>';return}
+const t=a+b-c||1;const s=(w,col,x)=>'<div style="flex:'+w+';background:'+col+'">'+x+'</div>';
+$('p2bar').innerHTML=(a-c?s(a-c,'var(--a)','тільки 1: '+(a-c)):'')+(c?s(c,'var(--ac)','обидва: '+c):'')+(b-c?s(b-c,'var(--b)','тільки 2: '+(b-c)):'');
+$('p2t').innerHTML=a+' + '+b+' − '+c+' = <b>'+(a+b-c)+'</b>'}
+['p2a','p2b','p2c'].forEach(i=>$(i).oninput=p2);p2();
+// 3
+const EX=[['.X.\n.X.\n00.','.X.\n.X.\n000'],['.XX\n.00\n...','XXX\n.00\n...'],['XXX\n000\n...','XXX\n000\n.X.'],['0X0\nX.X\n0X0','X0X\n0.0\nX0X'],['.X.\n...\n...','.X.\n...\n...']];
+let A3,B3;
+$('p3s').innerHTML=EX.map((_,i)=>'<option value="'+i+'">Приклад '+(i+1)+'</option>').join('');
+function load3(){const e=EX[+$('p3s').value];A3=e[0].replace(/\n/g,'').split('');B3=e[1].replace(/\n/g,'').split('');p3()}
+function p3(){const diff=[];for(let i=0;i<9;i++)if(A3[i]!=B3[i])diff.push(i);
+const g=(s,mark,ed)=>s.map((c,i)=>'<div'+(mark&&diff.includes(i)?' class="d"':'')+(ed?' data-i="'+i+'" style="cursor:pointer"':'')+'>'+(c=='.'?'':c)+'</div>').join('');
+$('p3a').innerHTML=g(A3,0,0);$('p3b').innerHTML=g(B3,1,1);
+const cx=A3.filter(c=>c=='X').length,c0=A3.filter(c=>c=='0').length,turn=cx==c0?'X':'0';
+let r;if(!diff.length)r=['YES','змін немає'];else if(diff.length>1)r=['NO','змінено клітинок: '+diff.length+' (більше однієї)'];
+else{const i=diff[0];r=A3[i]!='.'?['NO','клітинка вже була зайнята']:B3[i]!=turn?['NO','хрестиків '+cx+', нуликів '+c0+' → ходить '+turn+', а поставлено '+B3[i]]:['YES','хрестиків '+cx+', нуликів '+c0+' → ходить '+turn+', поставлено '+turn]}
+$('p3t').innerHTML='<span class="'+(r[0]=='YES'?'yes':'no')+'">'+r[0]+'</span> — '+r[1];
+document.querySelectorAll('#p3b [data-i]').forEach(d=>d.onclick=()=>{const i=+d.dataset.i;B3[i]={'.':'X','X':'0','0':'.'}[B3[i]];p3()})}
+$('p3s').onchange=load3;load3();
+// 4
+let s4=0;
+function p4(){const l=+$('p4l').value,r=+$('p4r').value,a=$('p4a').value.trim().split(/\s+/).map(Number);
+if(s4>a.length)s4=a.length;const dp=[];let log='';
+for(let i=0;i<s4;i++){const lo=l-a[i],hi=r-a[i],c=[];for(let j=0;j<i;j++)if(a[j]>=lo&&a[j]<=hi)c.push(j);
+dp[i]=1+Math.max(0,...c.map(j=>dp[j]));
+if(i==s4-1)log='<p>i='+(i+1)+', a='+a[i]+': шукаємо попередніх зі значенням у [<b>'+lo+'</b>, <b>'+hi+'</b>]. Підходять: '+(c.length?c.map(j=>'a'+(j+1)+'='+a[j]+' (dp='+dp[j]+')').join(', '):'нікого')+'. dp = 1 + '+Math.max(0,...c.map(j=>dp[j]))+' = <b>'+dp[i]+'</b></p>'}
+$('p4o').innerHTML='<table><tr><th>i</th>'+a.map((_,i)=>'<td>'+(i+1)+'</td>').join('')+'</tr><tr><th>a</th>'+a.map(x=>'<td>'+x+'</td>').join('')+'</tr><tr><th>dp</th>'+a.map((_,i)=>'<td'+(i==s4-1?' style="background:var(--a)"':'')+'>'+(i<s4?dp[i]:'?')+'</td>').join('')+'</tr></table>'+log+(s4==a.length?'<p class="yes">Відповідь = max(dp) = '+Math.max(...dp)+'</p>':'')}
+$('p4n').onclick=()=>{s4++;p4()};$('p4r0').onclick=()=>{s4=0;p4()};['p4l','p4r','p4a'].forEach(i=>$(i).oninput=()=>{s4=0;p4()});p4();
+// 5
+const E5=[[3,[[1,2],[2,3],[1,3]]],[5,[[2,4],[1,2],[3,4],[1,3],[1,5],[4,5],[2,3],[3,5],[1,4],[2,5]]]];
+let k5=0,seg=[[]];
+function col(n,edges){const c={},adj={};edges.forEach(([u,v])=>{(adj[u]=adj[u]||[]).push(v);(adj[v]=adj[v]||[]).push(u)});
+for(const s in adj){if(c[s]!==undefined)continue;c[s]=0;const q=[+s];while(q.length){const x=q.shift();for(const y of adj[x]){if(c[y]===undefined){c[y]=1-c[x];q.push(y)}else if(c[y]==c[x])return null}}}return c}
+function p5(){const [n,E]=E5[+$('p5s').selectedIndex];const pts=Array.from({length:n},(_,i)=>{const t=2*Math.PI*i/n-Math.PI/2;return[110+80*Math.cos(t),100+80*Math.sin(t)]});
+const cur=seg[seg.length-1],c=col(n,cur)||{};
+let svg='<svg width="220" height="200" viewBox="0 0 220 200">'+cur.map(([u,v])=>'<line x1="'+pts[u-1][0]+'" y1="'+pts[u-1][1]+'" x2="'+pts[v-1][0]+'" y2="'+pts[v-1][1]+'" stroke="currentColor" stroke-width="2"/>').join('');
+pts.forEach((p,i)=>{const cc=c[i+1];svg+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="15" fill="'+(cc===0?'#f59e0b':cc===1?'#3b82f6':'#9ca3af')+'" stroke="currentColor"/><text x="'+p[0]+'" y="'+(p[1]+5)+'" text-anchor="middle" font-size="14" fill="#000">'+(i+1)+'</text>'});
+$('p5o').innerHTML=svg+'</svg><p>Відрізків: <b>'+seg.length+'</b>. '+seg.map((s,i)=>'['+s.map(e=>e.join('-')).join(', ')+']').join(' ')+'</p><p id="p5m" class="mu">'+(window.m5||'Натисни «Додати ребро». Жовті й сині — дві команди.')+'</p>'}
+function step5(){const [n,E]=E5[+$('p5s').selectedIndex];if(k5>=E.length){window.m5='Усі ребра оброблено. Відповідь: <b>'+seg.length+'</b>';p5();return}
+const e=E[k5++],t=seg[seg.length-1].concat([e]);
+if(col(n,t)){seg[seg.length-1]=t;window.m5='Ребро '+e.join('-')+' додано: команди ще можна розставити.'}
+else{seg.push([e]);window.m5='<span class="no">Ребро '+e.join('-')+' створює непарний цикл!</span> Починаємо новий відрізок з нього.'}p5()}
+function reset5(){k5=0;seg=[[]];window.m5='';p5()}
+$('p5n').onclick=step5;$('p5r').onclick=reset5;$('p5s').onchange=reset5;p5();
+</script></body></html>
